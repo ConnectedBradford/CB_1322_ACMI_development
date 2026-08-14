@@ -27,8 +27,6 @@ This folder contains the code to build the ACMI from the Connected Bradford data
     - qc_processed.R
     - qc_raw_data.R
 - lists
-  - AC_medication_codes.csv
-  - selected_ac_medications.csv
   - selected_snomed_codes_delirium.csv
   - selected_snomed_codes_falls.csv
 - stata
@@ -39,7 +37,7 @@ This folder contains the code to build the ACMI from the Connected Bradford data
 
 ## Code
 
-This code is written to work with the Connected Bradford data stored in Google BigQuery. It's split into parts to try to keep it manageable.
+This code is written to work with the Connected Bradford data stored in Google BigQuery. It doesn't use any of the BigQuery-specific syntax, so it should just be table paths that need to be changed to be reused. It's split into parts to try to keep it manageable.
 
 The data_prep part is a series of R functions which themselves just build SQL strings which get passed to BigQuery. It's done this way so we can pass variables into the functions to change the source data and output location. Tables are built iteratively in BigQuery, ending up with over 30 by the time the final data table is built.
 
@@ -54,6 +52,8 @@ The Stata code builds the XLSX file which is imported into BigQuery.
 The list of anticholinergic medications to consider is defined in the `AC_medication_codes.csv` this includes a long list (20,000+) of anticholinergic medications consisting of every brand and dosage. Each medication in this list is mapped to a top level anticholinergic, e.g. *alprazolam 250microgram tablets* is mapped to *alprozam*. Similarly, *xanax 250microgram tablets* is mapped to *alprozam*. This enables the selection of all preparations of a given anticholinergic medication later on in the code. This list was manually curated from the BNF and other sources.
 
 The list of anticholinergics medications used in the development of ACMI is defined in `selected_ac_medications.csv`. This is a subset of the full list of anticholinergic medications in `AC_medication_codes.csv`.
+
+These AC medication code files are not included in this repo and are available on request.
 
 The lists of SNOMED codes for delirium and falls are defined in `selected_snomed_codes_delirium.csv` and `selected_snomed_codes_falls.csv` respectively.
 
